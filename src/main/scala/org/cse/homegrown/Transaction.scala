@@ -28,7 +28,7 @@ object SignedTransaction {
   }
 }
 
-class SignedTransaction (private val transaction: Transaction, private val signature: Signature) {
+case class SignedTransaction (private val transaction: Transaction, private val signature: Signature) {
   val from: Array[Byte] = transaction.from
   val to: Array[Byte] = transaction.to
   val amount: Long = transaction.amount
