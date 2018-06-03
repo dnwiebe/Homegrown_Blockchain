@@ -1,4 +1,4 @@
-package org.cse.homegrown
+package org.cse.homegrown.blockchain
 
 class BlockChain {
   private var chain = List (BlockWrapper (0, System.currentTimeMillis(), "Genesis Block", Hash (Array ())))

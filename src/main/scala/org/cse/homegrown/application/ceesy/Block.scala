@@ -1,5 +1,6 @@
-package org.cse.homegrown
+package org.cse.homegrown.application.ceesy
 
+import org.cse.homegrown.blockchain.SHA_256
 import org.cse.homegrown.utils.Utils
 
 object Block {

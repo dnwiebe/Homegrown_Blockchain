@@ -1,4 +1,4 @@
-package org.cse.homegrown
+package org.cse.homegrown.blockchain
 
 import org.cse.homegrown.utils.Utils
 

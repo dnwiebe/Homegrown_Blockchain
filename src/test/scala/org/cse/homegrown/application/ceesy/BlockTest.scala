@@ -1,4 +1,4 @@
-package org.cse.homegrown
+package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.utils.Utils
 import org.scalatest.path
