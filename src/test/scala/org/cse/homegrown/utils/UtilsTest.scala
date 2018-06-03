@@ -2,9 +2,6 @@ package org.cse.homegrown.utils
 
 import org.scalatest.path
 
-@SerialVersionUID (1L)
-case class Person (first: String, last: String, age: Int) extends Serializable
-
 class UtilsTest extends path.FunSpec {
 
   describe ("An array of bytes") {
@@ -27,11 +24,19 @@ class UtilsTest extends path.FunSpec {
     val encrypted = Utils.encrypt (serialized, privateKey)
 
     describe ("and then decrypted and deserialized") {
-      val decrypted = Utils.decrypt (encrypted, publicKey)
+      val decrypted = Utils.decrypt (encrypted, publicKey).get
       val result = Utils.deserialize (decrypted, classOf[Person])
 
       it ("produces the original data") {
         assert (result === data)
+      }
+    }
+
+    describe ("decrypted with the wrong key") {
+      val result = Utils.decrypt (encrypted, privateKey)
+
+      it ("fails") {
+        assert (result === None)
       }
     }
   }

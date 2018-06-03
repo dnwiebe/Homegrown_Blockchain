@@ -1,16 +1,13 @@
 package org.cse.homegrown
 
-import org.cse.homegrown.utils.Utils
+import org.cse.homegrown.utils.{Person, Utils}
 import org.scalatest.path
 
-@SerialVersionUID (1L)
-case class Person (first: String, last: String, age: Int) extends Serializable
-
-class BlockTest extends path.FunSpec {
+class BlockWrapperTest extends path.FunSpec {
 
   describe ("A Block") {
-    val content = new Person ("Fred", "Milligan", 49)
-    val subject = Block (1L, 2L, content, Hash (Array (3, 4, 5)))
+    val content = Person ("Fred", "Milligan", 49)
+    val subject = BlockWrapper (1L, 2L, content, Hash (Array (3, 4, 5)))
 
     it ("has the expected index") {
       assert (subject.index === 1L)
@@ -32,7 +29,7 @@ class BlockTest extends path.FunSpec {
       val string = subject.hash.value.map (Utils.stringFromByte).mkString ("")
 
       it("has the expected value") {
-        assert(string === "554699442780B3EBD7355356FE88B5867700778E6B5F0D363E46C2DF719F5131")
+        assert(string === "2927CD5A379E796C0780D02842CF833BCD7E933531205946976E7EE3A71EBB95")
       }
     }
   }

@@ -2,10 +2,17 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="b195bdb6-f834-494f-9b67-2418b2fbb523" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/UtilsTest.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Transaction.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/TransactionTest.scala" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/Person.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Block.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Block.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Block.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockWrapper.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockChain.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockChain.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Hash.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Hash.scala" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/utils/Utils.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/utils/Utils.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockChainTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockChainTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockWrapperTest.scala" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/UtilsTest.scala" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/UtilsTest.scala" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
     <ignored path="$PROJECT_DIR$/target/" />
@@ -25,34 +32,22 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="Block.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Block.scala">
+      <file leaf-file-name="BlockWrapper.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockWrapper.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="152">
-              <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-              <folding>
-                <element signature="e#27#126#0" expanded="true" />
-              </folding>
+            <state relative-caret-position="171">
+              <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="ByteArrayInputStream.java" pinned="false" current-in-tab="false">
-        <entry file="jar:///usr/lib/jvm/java-10-oracle/lib/src.zip!/java.base/java/io/ByteArrayInputStream.java">
+      <file leaf-file-name="BlockWrapperTest.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockWrapperTest.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="-263">
-              <caret line="43" column="6" selection-start-line="43" selection-start-column="6" selection-end-line="43" selection-end-column="6" />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="BlockTest.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockTest.scala">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="133">
-              <caret line="7" lean-forward="true" selection-start-line="4" selection-end-line="7" />
+            <state relative-caret-position="684">
+              <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
               <folding>
-                <element signature="e#27#67#0" expanded="true" />
+                <element signature="e#27#73#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -61,8 +56,8 @@
       <file leaf-file-name="BlockChain.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockChain.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="437">
-              <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
+            <state relative-caret-position="38">
+              <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
             </state>
           </provider>
         </entry>
@@ -70,17 +65,17 @@
       <file leaf-file-name="Utils.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/utils/Utils.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="874">
-              <caret line="46" column="2" selection-start-line="46" selection-start-column="2" selection-end-line="46" selection-end-column="2" />
+            <state relative-caret-position="570">
+              <caret line="30" column="40" lean-forward="true" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UtilsTest.scala" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UtilsTest.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/UtilsTest.scala">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="722">
-              <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+              <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
             </state>
           </provider>
         </entry>
@@ -94,32 +89,41 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name=".gitignore" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/.gitignore">
-          <provider selected="true" editor-type-id="text-editor">
-            <state>
-              <caret column="7" lean-forward="true" selection-start-column="7" selection-end-column="7" />
-            </state>
-          </provider>
-        </entry>
-      </file>
       <file leaf-file-name="Hash.scala" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Hash.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="19">
-              <caret line="1" selection-start-line="1" selection-end-line="1" />
+            <state relative-caret-position="76">
+              <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="HashTest.scala" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/HashTest.scala">
+      <file leaf-file-name="Transaction.scala" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Transaction.scala">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="361">
-              <caret line="19" lean-forward="true" selection-start-line="19" selection-end-line="19" />
+            <state relative-caret-position="494">
+              <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="TransactionTest.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/TransactionTest.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="859">
+              <caret line="57" column="44" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
               <folding>
-                <element signature="e#27#67#0" expanded="true" />
+                <element signature="e#27#73#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="Person.scala" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/Person.scala">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="76">
+              <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
             </state>
           </provider>
         </entry>
@@ -135,15 +139,21 @@
         <option value="$PROJECT_DIR$/build.sbt" />
         <option value="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/TestUtils.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/HashTest.scala" />
-        <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Hash.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockTest.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockChain.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockChainTest.scala" />
         <option value="$PROJECT_DIR$/.gitignore" />
-        <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Transaction.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Block.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/PrivateKey.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Keys.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockWrapper.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Hash.scala" />
         <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/utils/Utils.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/Person.scala" />
+        <option value="$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Transaction.scala" />
         <option value="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/UtilsTest.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/TransactionTest.scala" />
+        <option value="$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockWrapperTest.scala" />
       </list>
     </option>
   </component>
@@ -270,7 +280,7 @@
       </list>
     </option>
   </component>
-  <component name="RunManager" selected="ScalaTest.UtilsTest">
+  <component name="RunManager" selected="ScalaTest.ScalaTests in 'homegrown'">
     <configuration default="true" type="Application" factoryName="Application">
       <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
     </configuration>
@@ -319,10 +329,14 @@
       <setting name="package" value="org.cse.homegrown" />
       <buffered bufClass="org.cse.homegrown.BlockChainTest" />
       <buffered bufClass="org.cse.homegrown.BlockChainTest" />
-      <buffered bufClass="org.cse.homegrown.BlockTest" />
-      <buffered bufClass="org.cse.homegrown.BlockTest" />
+      <buffered bufClass="org.cse.homegrown.BlockWrapperTest" />
+      <buffered bufClass="org.cse.homegrown.BlockWrapperTest" />
       <buffered bufClass="org.cse.homegrown.HashTest" />
       <buffered bufClass="org.cse.homegrown.HashTest" />
+      <buffered bufClass="org.cse.homegrown.TransactionTest" />
+      <buffered bufClass="org.cse.homegrown.TransactionTest" />
+      <buffered bufClass="org.cse.homegrown.utils.UtilsTest" />
+      <buffered bufClass="org.cse.homegrown.utils.UtilsTest" />
     </configuration>
     <configuration name="UtilsTest" type="ScalaTestRunConfiguration" factoryName="ScalaTest" temporary="true">
       <module name="homegrownblockchain" />
@@ -349,8 +363,8 @@
     </list>
     <recent_temporary>
       <list>
-        <item itemvalue="ScalaTest.UtilsTest" />
         <item itemvalue="ScalaTest.ScalaTests in 'homegrown'" />
+        <item itemvalue="ScalaTest.UtilsTest" />
         <item itemvalue="ScalaTest.HashTest" />
       </list>
     </recent_temporary>
@@ -404,21 +418,6 @@
     <servers />
   </component>
   <component name="TestHistory">
-    <history-entry file="ScalaTests_in_'homegrown' - 2018.06.03 at 01h 11m 11s.xml">
-      <configuration name="ScalaTests in 'homegrown'" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="ScalaTests_in_'homegrown' - 2018.06.03 at 01h 11m 45s.xml">
-      <configuration name="ScalaTests in 'homegrown'" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="ScalaTests_in_'homegrown' - 2018.06.03 at 01h 11m 58s.xml">
-      <configuration name="ScalaTests in 'homegrown'" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="ScalaTests_in_'homegrown' - 2018.06.03 at 01h 13m 44s.xml">
-      <configuration name="ScalaTests in 'homegrown'" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
-    <history-entry file="ScalaTests_in_'homegrown' - 2018.06.03 at 01h 14m 05s.xml">
-      <configuration name="ScalaTests in 'homegrown'" configurationId="ScalaTestRunConfiguration" />
-    </history-entry>
     <history-entry file="ScalaTests_in_'homegrown' - 2018.06.03 at 08h 30m 03s.xml">
       <configuration name="ScalaTests in 'homegrown'" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
@@ -434,13 +433,27 @@
     <history-entry file="UtilsTest - 2018.06.03 at 11h 39m 05s.xml">
       <configuration name="UtilsTest" configurationId="ScalaTestRunConfiguration" />
     </history-entry>
+    <history-entry file="UtilsTest - 2018.06.03 at 11h 44m 37s.xml">
+      <configuration name="UtilsTest" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="UtilsTest - 2018.06.03 at 15h 44m 46s.xml">
+      <configuration name="UtilsTest" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="UtilsTest - 2018.06.03 at 15h 52m 36s.xml">
+      <configuration name="UtilsTest" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="ScalaTests_in_'homegrown' - 2018.06.03 at 15h 52m 50s.xml">
+      <configuration name="ScalaTests in 'homegrown'" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
+    <history-entry file="ScalaTests_in_'homegrown' - 2018.06.03 at 15h 53m 47s.xml">
+      <configuration name="ScalaTests in 'homegrown'" configurationId="ScalaTestRunConfiguration" />
+    </history-entry>
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="27912000" />
+    <option name="totallyTimeSpent" value="36449000" />
   </component>
   <component name="ToolWindowManager">
     <frame x="2287" y="55" width="2455" height="1828" extended-state="0" />
-    <editor active="true" />
     <layout>
       <window_info anchor="bottom" id="TODO" order="6" />
       <window_info anchor="right" id="Cargo" />
@@ -452,12 +465,12 @@
       <window_info anchor="bottom" id="Event Log" side_tool="true" />
       <window_info anchor="right" id="Maven Projects" />
       <window_info anchor="bottom" id="Database Changes" show_stripe_button="false" />
-      <window_info anchor="bottom" id="Run" order="2" visible="true" weight="0.32934132" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32934132" />
       <window_info anchor="bottom" id="Version Control" />
       <window_info anchor="bottom" id="Terminal" weight="0.3299401" />
       <window_info id="Capture Tool" />
       <window_info id="Designer" />
-      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.24989623" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.24989623" />
       <window_info anchor="bottom" id="sbt-shell-toolwindow" />
       <window_info anchor="bottom" id="Build" weight="0.32954547" />
       <window_info anchor="right" id="Database" />
@@ -574,23 +587,20 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockTest.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockWrapperTest.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="228">
           <caret line="12" column="20" lean-forward="true" selection-start-line="12" selection-start-column="20" selection-end-line="12" selection-end-column="20" />
           <folding>
-            <element signature="e#27#67#0" expanded="true" />
+            <element signature="e#27#73#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Block.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockWrapper.scala">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="57">
           <caret line="3" lean-forward="true" selection-start-line="3" selection-end-line="3" />
-          <folding>
-            <element signature="e#27#126#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -646,13 +656,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Hash.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="19">
-          <caret line="1" selection-start-line="1" selection-end-line="1" />
-        </state>
-      </provider>
-    </entry>
     <entry file="jar:///usr/lib/jvm/java-10-oracle/lib/src.zip!/java.base/java/io/ByteArrayInputStream.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="-263">
@@ -667,13 +670,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockChain.scala">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="437">
-          <caret line="23" lean-forward="true" selection-start-line="23" selection-end-line="23" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/.gitignore">
       <provider selected="true" editor-type-id="text-editor">
         <state>
@@ -681,20 +677,31 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Transaction.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Keys.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="38">
-          <caret line="2" column="23" lean-forward="true" selection-start-line="2" selection-start-column="23" selection-end-line="2" selection-end-column="23" />
+        <state>
+          <caret selection-end-line="13" />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Block.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockChain.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="152">
-          <caret line="8" column="44" selection-start-line="8" selection-start-column="44" selection-end-line="8" selection-end-column="44" />
-          <folding>
-            <element signature="e#27#126#0" expanded="true" />
-          </folding>
+        <state relative-caret-position="38">
+          <caret line="2" column="6" selection-start-line="2" selection-start-column="6" selection-end-line="2" selection-end-column="6" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Hash.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" column="11" selection-start-line="4" selection-start-column="11" selection-end-line="4" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/utils/Utils.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="570">
+          <caret line="30" column="40" lean-forward="true" selection-start-line="30" selection-start-column="40" selection-end-line="30" selection-end-column="40" />
         </state>
       </provider>
     </entry>
@@ -705,27 +712,51 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockTest.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/UtilsTest.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="133">
-          <caret line="7" lean-forward="true" selection-start-line="4" selection-end-line="7" />
+        <state relative-caret-position="722">
+          <caret line="38" column="32" selection-start-line="38" selection-start-column="32" selection-end-line="38" selection-end-column="32" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/TransactionTest.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="859">
+          <caret line="57" column="44" selection-start-line="57" selection-start-column="44" selection-end-line="57" selection-end-column="44" />
           <folding>
-            <element signature="e#27#67#0" expanded="true" />
+            <element signature="e#27#73#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/utils/Utils.scala">
+    <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/BlockWrapperTest.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="874">
-          <caret line="46" column="2" selection-start-line="46" selection-start-column="2" selection-end-line="46" selection-end-column="2" />
+        <state relative-caret-position="684">
+          <caret line="36" lean-forward="true" selection-start-line="36" selection-end-line="36" />
+          <folding>
+            <element signature="e#27#73#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/UtilsTest.scala">
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/BlockWrapper.scala">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="722">
-          <caret line="38" lean-forward="true" selection-start-line="38" selection-end-line="38" />
+        <state relative-caret-position="171">
+          <caret line="9" lean-forward="true" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/test/scala/org/cse/homegrown/utils/Person.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="76">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/scala/org/cse/homegrown/Transaction.scala">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="494">
+          <caret line="26" column="8" selection-start-line="26" selection-start-column="8" selection-end-line="26" selection-end-column="8" />
         </state>
       </provider>
     </entry>

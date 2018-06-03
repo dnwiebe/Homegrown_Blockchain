@@ -1,15 +1,15 @@
 package org.cse.homegrown
 
 class BlockChain {
-  private var chain = List (Block (0, System.currentTimeMillis(), "Genesis Block", Hash (Array ())))
+  private var chain = List (BlockWrapper (0, System.currentTimeMillis(), "Genesis Block", Hash (Array ())))
 
-  def latest: Block = {
+  def latest: BlockWrapper = {
     chain.head
   }
 
   def add (content: Any): Unit = {
     val previousBlock = latest
-    val thisBlock = Block (previousBlock.index + 1, System.currentTimeMillis(), content, previousBlock.hash)
+    val thisBlock = BlockWrapper (previousBlock.index + 1, System.currentTimeMillis(), content, previousBlock.hash)
     chain = thisBlock :: chain
   }
 

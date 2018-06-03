@@ -35,12 +35,12 @@ object Utils {
     translateKey (key) ++ plain
   }
 
-  def decrypt (crypt: Array[Byte], key: Array[Byte]): Array[Byte] = {
+  def decrypt (crypt: Array[Byte], key: Array[Byte]): Option[Array[Byte]] = {
     if (crypt.take (key.length).sameElements (key)) {
-      crypt.drop (key.length)
+      Some (crypt.drop (key.length))
     }
     else {
-      throw new IllegalArgumentException ("Wrong decryption key")
+      None
     }
   }
 

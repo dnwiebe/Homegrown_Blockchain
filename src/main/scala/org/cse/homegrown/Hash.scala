@@ -22,7 +22,6 @@ trait HashFactory {
 }
 
 object SHA_256 extends HashFactory {
-
   def apply (bytes: Seq[Byte]): Hash = {
     val digest = java.security.MessageDigest.getInstance ("SHA-256")
     bytes.foreach (digest.update)

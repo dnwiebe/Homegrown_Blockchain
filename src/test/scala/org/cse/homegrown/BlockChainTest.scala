@@ -11,7 +11,7 @@ class BlockChainTest extends path.FunSpec {
 
     describe ("asked for its latest block") {
       val result = subject.latest
-      val block = new Block (0, 0, "Genesis Block", Hash (Array ()))
+      val block = new BlockWrapper (0, 0, "Genesis Block", Hash (Array ()))
 
       it ("produces the genesis block") {
         assert (result.index === 0)
@@ -40,7 +40,7 @@ class BlockChainTest extends path.FunSpec {
 
       describe ("and then asked for its latest block") {
         val result = subject.latest
-        val block = new Block (0, 0, content, Hash (Array ()))
+        val block = new BlockWrapper (0, 0, content, Hash (Array ()))
 
         it ("produces the new block") {
           assert (result.index === 1)
