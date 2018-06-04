@@ -1,13 +1,13 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.utils.Utils
+import org.cse.homegrown.utils.{TestUtils, Utils}
 import org.scalatest.path
 
 class BlockTest extends path.FunSpec {
 
   describe ("A Block with two transactions in it") {
-    val (alicePrivate, alicePublic) = makeKeyPair (91, 82, 35, 9, 32, 12)
-    val (bobPrivate, bobPublic) = makeKeyPair (35, 9, 32, 12, 91, 82)
+    val (alicePrivate, alicePublic) = TestUtils.makeKeyPair (91, 82, 35, 9, 32, 12)
+    val (bobPrivate, bobPublic) = TestUtils.makeKeyPair (35, 9, 32, 12, 91, 82)
     val validatorPublic: Array[Byte] = Array (78, 40, 39, 28, 74, 65)
     val aliceToBob = SignedTransaction.pay (alicePublic, bobPublic, 100, alicePrivate)
     val bobToAlice = SignedTransaction.pay (bobPublic, alicePublic, 100, bobPrivate)
@@ -42,11 +42,5 @@ class BlockTest extends path.FunSpec {
       }
       assert (prettyFound === true)
     }
-  }
-
-  def makeKeyPair (bytes: Byte*): (Array[Byte], Array[Byte]) = {
-    val privateKey = bytes.toArray
-    val publicKey = Utils.translateKey(privateKey)
-    (privateKey, publicKey)
   }
 }
