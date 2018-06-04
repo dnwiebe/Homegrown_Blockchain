@@ -12,6 +12,14 @@ case class Hash (value: Array[Byte]) {
     }
   }
 
+  override def hashCode (): Int = {
+    value.indices.foldLeft (0) {(soFar, idx) =>
+      val byte = value (idx)
+      val bitOffset = (idx & 0x3) << 3
+      soFar + (byte << bitOffset)
+    }
+  }
+
   override def toString: String = {
     Utils.stringFromBytes (value)
   }

@@ -16,4 +16,30 @@ class HashTest extends path.FunSpec {
       }
     }
   }
+
+  describe ("A bunch of Hashes for testing equality") {
+    val a = Hash (Array (1, 2, 3, 4))
+    val b = Hash (Array (1, 2, 3, 4))
+    val c = Hash (Array (1, 2, 3, 5))
+
+    it ("produce the expected results") {
+      assert (a.equals (a) === true)
+      assert (a.equals (b) === true)
+      assert (a.equals (c) === false)
+      assert (a.equals (null) === false)
+      assert (a.equals ("Booga") === false)
+    }
+  }
+
+  describe ("A bunch of Hashes for testing hashCode") {
+    val a = Hash (Array (1, 2, 3, 4))
+    val b = Hash (Array (1, 2, 3, 4))
+    val c = Hash (Array (1, 2, 3, 5))
+
+    it ("produce the expected results") {
+      assert (a.hashCode () === a.hashCode ())
+      assert (a.hashCode () === b.hashCode ())
+      assert (a.hashCode () != c.hashCode ())
+    }
+  }
 }

@@ -1,23 +1,41 @@
 package org.cse.homegrown.blockchain
 
-class BlockChain {
-  private var chain = List (BlockWrapper (0, System.currentTimeMillis(), "Genesis Block", Hash (Array ())))
+import org.cse.homegrown.utils.Utils
+
+import scala.collection.mutable
+
+class BlockChain (genesisBlock: Any) {
+  private var latestHash = SHA_256 (Utils.serialize (genesisBlock))
+  private val chain = mutable.HashMap (latestHash -> BlockWrapper (0, System.currentTimeMillis (), genesisBlock, Hash (Array ())))
 
   def latest: BlockWrapper = {
-    chain.head
+    chain (latestHash)
+  }
+
+  def block (hash: Hash): Option[BlockWrapper] = {
+    chain.get (hash)
   }
 
   def add (content: Any): Unit = {
     val previousBlock = latest
     val thisBlock = BlockWrapper (previousBlock.index + 1, System.currentTimeMillis(), content, previousBlock.hash)
-    chain = thisBlock :: chain
+    chain (thisBlock.hash) = thisBlock
+    latestHash = thisBlock.hash
   }
 
   def isValid: Boolean = {
-    !chain.zip (chain.tail).exists {pair =>
-      val (later, earlier) = pair
-      (SHA_256 (later.data) != later.hash) ||
-        (later.previousHash != earlier.hash)
+    isValidFrom(latest)
+  }
+
+  private def isValidFrom (blockWrapper: BlockWrapper): Boolean = {
+    if (blockWrapper.previousHash.value.isEmpty) return true
+    block (blockWrapper.previousHash) match {
+      case None => false
+      case Some (previous) => {
+        (SHA_256 (blockWrapper.data) == blockWrapper.hash) &&
+          (blockWrapper.previousHash == previous.hash) &&
+        isValidFrom (previous)
+      }
     }
   }
 }

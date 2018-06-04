@@ -6,7 +6,7 @@ class BlockChainTest extends path.FunSpec {
 
   describe ("A new BlockChain") {
     val before = System.currentTimeMillis()
-    val subject = new BlockChain ()
+    val subject = new BlockChain ("Genesis Block")
     val after = System.currentTimeMillis()
 
     describe ("asked for its latest block") {
