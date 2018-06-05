@@ -7,7 +7,7 @@ class BlockWrapperTest extends path.FunSpec {
 
   describe ("A Block") {
     val content = Person ("Fred", "Milligan", 49)
-    val subject = BlockWrapper (1L, 2L, content, Hash (Array (3, 4, 5)))
+    val subject = BlockWrapper (1L, 2L, content, new Hash (Array (3, 4, 5)))
 
     it ("has the expected index") {
       assert (subject.index === 1L)
@@ -22,11 +22,11 @@ class BlockWrapperTest extends path.FunSpec {
     }
 
     it ("has the expected previous-block hash") {
-      assert (subject.previousHash.value === Hash (Array (3, 4, 5)).value)
+      assert (subject.previousHash.bytes === new Hash (Array (3, 4, 5)).bytes)
     }
 
     describe ("with its hash converted to a string") {
-      val string = subject.hash.value.map (Utils.stringFromByte).mkString ("")
+      val string = subject.hash.bytes.map (Utils.stringFromByte).mkString ("")
 
       it("has the expected value") {
         assert(string === "2927CD5A379E796C0780D02842CF833BCD7E933531205946976E7EE3A71EBB95")

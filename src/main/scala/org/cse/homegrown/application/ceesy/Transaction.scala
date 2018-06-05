@@ -1,41 +1,47 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.blockchain.SHA_256
+import org.cse.homegrown.blockchain.{ByteSeq, SHA_256}
 import org.cse.homegrown.utils.Utils
 
+import scala.concurrent.{Future, Promise}
+import scala.util.Success
+
 object Signature {
-  def sign (obj: Any, privateKey: Array[Byte]): Signature = {
+  def sign (obj: Any, privateKey: PrivateKey): Signature = {
     val hash = SHA_256 (Utils.serialize (obj))
-    new Signature (Utils.encrypt (hash.value, privateKey))
+    new Signature (Utils.encrypt (new PlainData (hash.bytes), privateKey))
   }
 }
 
-case class Signature (bytes: Array[Byte]) {
-  def verify (document: Any, publicKey: Array[Byte]): Boolean = {
-    Utils.decrypt (bytes, publicKey) match {
+class Signature (bytes: ByteSeq) extends ByteSeq (bytes.bytes) {
+  def verify (document: Any, publicKey: PublicKey): Boolean = {
+    Utils.decrypt (new CryptData (bytes.bytes), publicKey) match {
       case None => false
-      case Some (decrypted) => decrypted.sameElements (SHA_256 (Utils.serialize (document)).value)
+      case Some (decrypted) => decrypted.bytes.sameElements (SHA_256 (Utils.serialize (document)).bytes)
     }
   }
 }
 
-case class Transaction (from: Array[Byte], to: Array[Byte], amount: Long, timestamp: Long)
+case class Transaction (from: PublicKey, to: PublicKey, amount: Long, timestamp: Long)
 
 object SignedTransaction {
-  def pay (from: Array[Byte], to: Array[Byte], amount: Long, fromPrivateKey: Array[Byte]): SignedTransaction = {
+  def pay (from: PublicKey, to: PublicKey, amount: Long, fromPrivateKey: PrivateKey): (SignedTransaction, Future[Boolean]) = {
     val transaction = Transaction (from, to, amount, System.currentTimeMillis())
     val signature = Signature.sign (transaction, fromPrivateKey)
-    new SignedTransaction (transaction, signature)
+    val verifyPromise = Promise[Boolean] ()
+    val result = new SignedTransaction (transaction, signature, verifyPromise)
+    (result, verifyPromise.future)
   }
 }
 
-case class SignedTransaction (private val transaction: Transaction, private val signature: Signature) {
-  val from: Array[Byte] = transaction.from
-  val to: Array[Byte] = transaction.to
+case class SignedTransaction (private val transaction: Transaction, private val signature: Signature,
+                              verifyPromise: Promise[Boolean]) {
+  val from: PublicKey = transaction.from
+  val to: PublicKey = transaction.to
   val amount: Long = transaction.amount
   val timestamp: Long = transaction.timestamp
 
-  def verify (): Boolean = {
+  def verifySignature(): Boolean = {
     signature.verify (transaction, from)
   }
 }

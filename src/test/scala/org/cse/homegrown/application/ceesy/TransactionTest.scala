@@ -1,15 +1,18 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.utils.{Person, Utils}
+import org.cse.homegrown.blockchain.ByteSeq
+import org.cse.homegrown.utils.{Person, TestUtils, Utils}
 import org.scalatest.path
+
+import scala.concurrent.Promise
+import scala.util.Success
 
 class TransactionTest extends path.FunSpec {
 
   describe ("Given a couple of different objects and a key pair") {
     val onePerson = Person ("Simon", "Cowell", 68)
     val anotherPerson = Person ("Howie", "Mandel", 62)
-    val privateKey: Array[Byte] = Array (34, 52, 34, 52, 35, 63, 4)
-    val publicKey = Utils.translateKey (privateKey)
+    val (privateKey, publicKey) = TestUtils.makeKeyPair(12345)
 
     describe ("a signature of one of the items with the private key") {
       val subject = Signature.sign (onePerson, privateKey)
@@ -23,39 +26,49 @@ class TransactionTest extends path.FunSpec {
       }
 
       it ("does not validate with that item and a different key") {
-        assert (subject.verify (onePerson, privateKey) === false)
+        assert (subject.verify (onePerson, TestUtils.makeKeyPair (23456)._2) === false)
       }
     }
   }
 
   describe ("Given a key pair and an extra public key") {
-    val fromPrivate: Array[Byte] = Array (34, 52, 34, 52, 35, 63, 4)
-    val fromPublic = Utils.translateKey (fromPrivate)
-    val toPublic: Array[Byte] = Array (98, 34, 72, 9, 35, 7, 92)
+    val (fromPrivate, fromPublic) = TestUtils.makeKeyPair (12345)
+    val (_, toPublic) = TestUtils.makeKeyPair (23456)
 
     describe ("a SignedTransaction from one to the other") {
       val before = System.currentTimeMillis ()
-      val subject = SignedTransaction.pay (fromPublic, toPublic, 12345, fromPrivate)
+      val (subject, verifyFuture) = SignedTransaction.pay (fromPublic, toPublic, 12345, fromPrivate)
       val after = System.currentTimeMillis ()
 
       it ("shows the right data") {
         assert (subject.timestamp >= before)
         assert (subject.timestamp <= after)
-        assert (subject.from.sameElements (fromPublic))
-        assert (subject.to.sameElements (toPublic))
+        assert (subject.from === fromPublic)
+        assert (subject.to === toPublic)
         assert (subject.amount === 12345)
+        assert (verifyFuture.isCompleted === false)
       }
 
-      it ("validates fine") {
-        assert (subject.verify () === true)
+      describe ("verified") {
+        val result = subject.verifySignature ()
+
+        it ("verifies fine") {
+          assert (result === true)
+        }
       }
     }
 
     describe ("a cobbled-together SignedTransaction") {
-      val subject = new SignedTransaction (new Transaction (fromPublic, toPublic, 12345, 0L), Signature (Array (1, 2, 3)))
+      val verifyPromise = Promise[Boolean] ()
+      val subject = new SignedTransaction (Transaction (fromPublic, toPublic, 12345, 0L), new Signature (new ByteSeq (Array (1, 2, 3))), verifyPromise)
+      val verifyFuture = verifyPromise.future
 
-      it ("does not validate") {
-        assert (subject.verify () === false)
+      describe ("verified") {
+        val result = subject.verifySignature ()
+
+        it ("does not verify") {
+          assert (result === false)
+        }
       }
     }
   }

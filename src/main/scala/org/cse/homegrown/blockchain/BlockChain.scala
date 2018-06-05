@@ -6,7 +6,7 @@ import scala.collection.mutable
 
 class BlockChain (genesisBlock: Any) {
   private var latestHash = SHA_256 (Utils.serialize (genesisBlock))
-  private val chain = mutable.HashMap (latestHash -> BlockWrapper (0, System.currentTimeMillis (), genesisBlock, Hash (Array ())))
+  private val chain = mutable.HashMap (latestHash -> BlockWrapper (0, System.currentTimeMillis (), genesisBlock, new Hash (Array ())))
 
   def latest: BlockWrapper = {
     chain (latestHash)
@@ -28,7 +28,7 @@ class BlockChain (genesisBlock: Any) {
   }
 
   private def isValidFrom (blockWrapper: BlockWrapper): Boolean = {
-    if (blockWrapper.previousHash.value.isEmpty) return true
+    if (blockWrapper.previousHash.bytes.isEmpty) return true
     block (blockWrapper.previousHash) match {
       case None => false
       case Some (previous) => {

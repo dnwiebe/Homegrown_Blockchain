@@ -1,5 +1,6 @@
 package org.cse.homegrown.utils
 
+import org.cse.homegrown.application.ceesy.PrivateKey
 import org.scalatest.path
 
 class UtilsTest extends path.FunSpec {
@@ -18,7 +19,7 @@ class UtilsTest extends path.FunSpec {
 
   describe ("A Person, serialized and encrypted") {
     val data = Person ("Dave", "Hardiman", 34)
-    val privateKey: Array[Byte] = Array (90, 23, 80, 30, 20, 93, 47, 2)
+    val privateKey = new PrivateKey (Array (90, 23, 80, 30, 20, 93, 47, 2))
     val publicKey = Utils.translateKey (privateKey)
     val serialized = Utils.serialize (data)
     val encrypted = Utils.encrypt (serialized, privateKey)

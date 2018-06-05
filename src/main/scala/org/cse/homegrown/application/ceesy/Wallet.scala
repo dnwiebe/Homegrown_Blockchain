@@ -1,12 +1,12 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.blockchain.BlockChain
-
 import scala.concurrent.Future
 
-class Wallet (blockchain: BlockChain, privateKey: Array[Byte], publicKey: Array[Byte]) {
-  def makePayment (to: Array[Byte], amount: Long): Future[Boolean] = {
-    throw new UnsupportedOperationException ()
+class Wallet (ceesy: Ceesy, privateKey: PrivateKey, publicKey: PublicKey) {
+  def makePayment (to: PublicKey, amount: Long): Future[Boolean] = {
+    val (transaction, verifyFuture) = SignedTransaction.pay (publicKey, to, amount, privateKey)
+    ceesy.pendTransaction (transaction)
+    verifyFuture
   }
 
   def balance: Long = {
