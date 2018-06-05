@@ -32,6 +32,13 @@ object SignedTransaction {
     val result = new SignedTransaction (transaction, signature, verifyPromise)
     (result, verifyPromise.future)
   }
+
+  def miningReward (miner: PublicKey): SignedTransaction = {
+    val transaction = Transaction (new PublicKey (Array ()), miner, Miner.COINS_PER_TRANSACTION, System.currentTimeMillis())
+    val signature = new Signature (new ByteSeq (Array ()))
+    val verifyPromise = Promise[Boolean] ()
+    new SignedTransaction (transaction, signature, verifyPromise)
+  }
 }
 
 case class SignedTransaction (private val transaction: Transaction, private val signature: Signature,

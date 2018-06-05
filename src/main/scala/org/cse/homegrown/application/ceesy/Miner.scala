@@ -3,7 +3,7 @@ package org.cse.homegrown.application.ceesy
 import org.cse.homegrown.blockchain.BlockWrapper
 
 import scala.collection.immutable.HashMap
-import scala.collection.mutable
+import scala.concurrent.Promise
 import scala.util.{Random, Success}
 
 object Miner {
@@ -16,15 +16,24 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
 
   def verifyOutstandingPayments (): Boolean = {
     val transactions = ceesy.takePendingTransactions ()
-    val block = Block (transactions, minerPublic)
-    val prettyBlock = prettify (block)
-    val balances = computeBalances (ceesy.chain.latest, new HashMap ())
-    prettyBlock.transactions.foldLeft (balances) {(soFar, xactn) =>
-      val (updatedBalances, result) = verifyTransaction (xactn, soFar)
-      xactn.verifyPromise.complete (Success (result))
-      updatedBalances
+    val (promisePairs, rewards, balances) = transactions.foldLeft ((
+        List[(Promise[Boolean], Boolean)] (),
+        List[SignedTransaction] (),
+        computeBalances (ceesy.chain.latest, new HashMap ())
+    )) {(soFar, xactn) =>
+      val (verifyPromises, miningRewards, balances) = soFar
+      val (updatedBalances, result) = verifyTransaction (xactn, balances)
+      val updatedRewards = SignedTransaction.miningReward (minerPublic) :: miningRewards
+      val updatedPromises = (xactn.verifyPromise, result) :: verifyPromises
+      (updatedPromises, updatedRewards, updatedBalances)
     }
+    val block = Block (transactions ++ rewards, minerPublic)
+    val prettyBlock = prettify (block)
     ceesy.chain.add (prettyBlock)
+    promisePairs.foreach {pair =>
+      val (promise, result) = pair
+      promise.complete (Success (result))
+    }
     true
   }
 
