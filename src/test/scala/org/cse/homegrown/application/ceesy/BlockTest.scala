@@ -1,6 +1,6 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.utils.{TestUtils, Utils}
+import org.cse.homegrown.utils.{Nonce, TestUtils, Utils}
 import org.scalatest.path
 
 import scala.concurrent.Promise

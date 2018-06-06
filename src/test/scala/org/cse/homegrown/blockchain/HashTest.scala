@@ -1,7 +1,6 @@
 package org.cse.homegrown.blockchain
 
-import org.cse.homegrown.application.ceesy.PlainData
-import org.cse.homegrown.utils.Utils
+import org.cse.homegrown.utils.{PlainData, Utils}
 import org.scalatest.path
 
 class HashTest extends path.FunSpec {

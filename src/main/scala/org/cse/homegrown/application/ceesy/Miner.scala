@@ -1,13 +1,14 @@
 package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.blockchain.BlockWrapper
+import org.cse.homegrown.utils.{Nonce, PublicKey}
 
 import scala.collection.immutable.HashMap
 import scala.concurrent.Promise
 import scala.util.{Random, Success}
 
 object Miner {
-  val COINS_PER_TRANSACTION = 10
+  val TOKENS_PER_BLOCK = 10
 }
 
 class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
@@ -16,18 +17,16 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
 
   def verifyOutstandingPayments (): Boolean = {
     val transactions = ceesy.takePendingTransactions ()
-    val (promisePairs, rewards, balances) = transactions.foldLeft ((
+    val (promisePairs, balances) = transactions.foldLeft ((
         List[(Promise[Boolean], Boolean)] (),
-        List[SignedTransaction] (),
         computeBalances (ceesy.chain.latest, new HashMap ())
     )) {(soFar, xactn) =>
-      val (verifyPromises, miningRewards, balances) = soFar
+      val (verifyPromises, balances) = soFar
       val (updatedBalances, result) = verifyTransaction (xactn, balances)
-      val updatedRewards = SignedTransaction.miningReward (minerPublic) :: miningRewards
       val updatedPromises = (xactn.verifyPromise, result) :: verifyPromises
-      (updatedPromises, updatedRewards, updatedBalances)
+      (updatedPromises, updatedBalances)
     }
-    val block = Block (transactions ++ rewards, minerPublic)
+    val block = Block ((SignedTransaction.miningReward(minerPublic) :: transactions).toArray, minerPublic)
     val prettyBlock = prettify (block)
     ceesy.chain.add (prettyBlock)
     promisePairs.foreach {pair =>

@@ -1,7 +1,7 @@
 package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.blockchain.SHA_256
-import org.cse.homegrown.utils.Utils
+import org.cse.homegrown.utils.{Nonce, PublicKey, Utils}
 
 object Block {
   val REQUIRED_ZEROS = 10

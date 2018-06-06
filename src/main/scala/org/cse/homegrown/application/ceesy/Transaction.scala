@@ -1,7 +1,7 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.blockchain.{ByteSeq, SHA_256}
-import org.cse.homegrown.utils.Utils
+import org.cse.homegrown.blockchain._
+import org.cse.homegrown.utils._
 
 import scala.concurrent.{Future, Promise}
 import scala.util.Success
@@ -34,7 +34,7 @@ object SignedTransaction {
   }
 
   def miningReward (miner: PublicKey): SignedTransaction = {
-    val transaction = Transaction (new PublicKey (Array ()), miner, Miner.COINS_PER_TRANSACTION, System.currentTimeMillis())
+    val transaction = Transaction (new PublicKey (Array ()), miner, Miner.TOKENS_PER_BLOCK, System.currentTimeMillis())
     val signature = new Signature (new ByteSeq (Array ()))
     val verifyPromise = Promise[Boolean] ()
     new SignedTransaction (transaction, signature, verifyPromise)

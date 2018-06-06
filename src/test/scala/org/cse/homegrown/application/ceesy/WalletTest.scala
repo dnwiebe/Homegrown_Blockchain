@@ -37,7 +37,7 @@ class WalletTest extends path.FunSpec {
             assert (initialWallet.balance === 1000000 - 1000 - 750)
             assert (aliceWallet.balance === 1000 - 200)
             assert (bobWallet.balance === 750 + 200)
-            assert (minerWallet.balance === 3 * Miner.COINS_PER_TRANSACTION)
+            assert (minerWallet.balance === Miner.TOKENS_PER_BLOCK)
           }
         }
       }

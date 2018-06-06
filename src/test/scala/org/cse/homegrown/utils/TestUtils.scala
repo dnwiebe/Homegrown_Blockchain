@@ -1,7 +1,5 @@
 package org.cse.homegrown.utils
 
-import org.cse.homegrown.application.ceesy.{PrivateKey, PublicKey}
-
 import scala.util.Random
 
 object TestUtils {

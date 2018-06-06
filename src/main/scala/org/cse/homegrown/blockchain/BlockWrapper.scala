@@ -1,7 +1,6 @@
 package org.cse.homegrown.blockchain
 
-import org.cse.homegrown.application.ceesy.PlainData
-import org.cse.homegrown.utils.Utils
+import org.cse.homegrown.utils.{PlainData, Utils}
 
 case class BlockWrapper(index: Long, timestamp: Long, private val content: Any, previousHash: Hash) {
   val data: PlainData = Utils.serialize (content)

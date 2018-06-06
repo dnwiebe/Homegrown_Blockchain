@@ -1,6 +1,5 @@
 package org.cse.homegrown.utils
 
-import org.cse.homegrown.application.ceesy.PrivateKey
 import org.scalatest.path
 
 class UtilsTest extends path.FunSpec {

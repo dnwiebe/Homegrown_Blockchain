@@ -1,6 +1,4 @@
-package org.cse.homegrown.blockchain
-
-import org.cse.homegrown.utils.Utils
+package org.cse.homegrown.utils
 
 
 class ByteSeq (val bytes: Array[Byte]) extends Serializable {

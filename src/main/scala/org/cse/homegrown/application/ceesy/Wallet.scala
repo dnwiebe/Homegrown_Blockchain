@@ -1,6 +1,7 @@
 package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.blockchain.BlockWrapper
+import org.cse.homegrown.utils.{PrivateKey, PublicKey}
 
 import scala.concurrent.Future
 

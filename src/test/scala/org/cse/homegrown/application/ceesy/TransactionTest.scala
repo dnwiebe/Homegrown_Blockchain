@@ -1,7 +1,6 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.blockchain.ByteSeq
-import org.cse.homegrown.utils.{Person, TestUtils, Utils}
+import org.cse.homegrown.utils.{ByteSeq, Person, TestUtils, Utils}
 import org.scalatest.path
 
 import scala.concurrent.Promise

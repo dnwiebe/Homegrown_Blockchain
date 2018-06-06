@@ -1,6 +1,7 @@
 package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.blockchain.BlockChain
+import org.cse.homegrown.utils.{PrivateKey, PublicKey}
 
 object Ceesy {
   private def makeChain (initialSupply: Long, initialPrivate: PrivateKey, initialPublic: PublicKey): BlockChain = {
@@ -20,8 +21,8 @@ class Ceesy (initialSupply: Long, initialPrivate: PrivateKey, initialPublic: Pub
     pendingTransactions = transaction :: pendingTransactions
   }
 
-  def takePendingTransactions (): Array[SignedTransaction] = {
-    val result = pendingTransactions.reverse.toArray
+  def takePendingTransactions (): List[SignedTransaction] = {
+    val result = pendingTransactions.reverse
     pendingTransactions = Nil
     result
   }

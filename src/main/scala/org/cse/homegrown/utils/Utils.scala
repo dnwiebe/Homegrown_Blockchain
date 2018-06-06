@@ -3,6 +3,7 @@ package org.cse.homegrown.utils
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 
 import org.cse.homegrown.application.ceesy._
+import org.cse.homegrown.blockchain._
 
 object Utils {
 

@@ -1,5 +1,7 @@
 package org.cse.homegrown.blockchain
 
+import org.cse.homegrown.utils.ByteSeq
+
 class Hash (bytes: Array[Byte]) extends ByteSeq (bytes)
 
 trait HashFactory {
