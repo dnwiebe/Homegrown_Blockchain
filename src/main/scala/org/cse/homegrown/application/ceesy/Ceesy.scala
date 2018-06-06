@@ -6,7 +6,7 @@ import org.cse.homegrown.utils.{PrivateKey, PublicKey}
 object Ceesy {
   private def makeChain (initialSupply: Long, initialPrivate: PrivateKey, initialPublic: PublicKey): BlockChain = {
     val (transaction, _) = SignedTransaction.pay (new PublicKey(Array ()), initialPublic, initialSupply, new PrivateKey (Array ()))
-    val genesisBlock = Block (Array (transaction), new PublicKey (Array ()))
+    val genesisBlock = Block (Array (VerifiedTransaction (transaction)), new PublicKey (Array ()))
     new BlockChain(genesisBlock)
   }
 }

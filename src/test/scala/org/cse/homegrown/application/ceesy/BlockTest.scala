@@ -13,7 +13,7 @@ class BlockTest extends path.FunSpec {
     val (_, validatorPublic) = TestUtils.makeKeyPair (34567)
     val (aliceToBob, _) = SignedTransaction.pay (alicePublic, bobPublic, 100, alicePrivate)
     val (bobToAlice, _) = SignedTransaction.pay (bobPublic, alicePublic, 100, bobPrivate)
-    val transactions = Array (aliceToBob, bobToAlice)
+    val transactions = Array (VerifiedTransaction (aliceToBob), VerifiedTransaction (bobToAlice))
     val verifyPromise = Promise[Boolean] ()
 
     val before = System.currentTimeMillis()

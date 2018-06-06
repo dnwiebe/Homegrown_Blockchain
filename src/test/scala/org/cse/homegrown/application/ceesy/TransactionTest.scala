@@ -59,7 +59,7 @@ class TransactionTest extends path.FunSpec {
 
     describe ("a cobbled-together SignedTransaction") {
       val verifyPromise = Promise[Boolean] ()
-      val subject = new SignedTransaction (Transaction (fromPublic, toPublic, 12345, 0L), new Signature (new ByteSeq (Array (1, 2, 3))), verifyPromise)
+      val subject = new SignedTransaction (TransactionGuts (fromPublic, toPublic, 12345, 0L), new Signature (new ByteSeq (Array (1, 2, 3))), verifyPromise)
       val verifyFuture = verifyPromise.future
 
       describe ("verified") {

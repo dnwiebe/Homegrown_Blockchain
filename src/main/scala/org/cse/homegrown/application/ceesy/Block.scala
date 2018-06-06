@@ -6,12 +6,12 @@ import org.cse.homegrown.utils.{Nonce, PublicKey, Utils}
 object Block {
   val REQUIRED_ZEROS = 10
 
-  def apply (transactions: Array[SignedTransaction], validator: PublicKey): Block = {
+  def apply (transactions: Array[VerifiedTransaction], validator: PublicKey): Block = {
     new Block (transactions, System.currentTimeMillis(), validator, new Nonce (Array ()))
   }
 }
 
-case class Block (transactions: Array[SignedTransaction], timestamp: Long, validator: PublicKey, nonce: Nonce) {
+case class Block (transactions: Array[VerifiedTransaction], timestamp: Long, validator: PublicKey, nonce: Nonce) {
   import Block._
 
   def withNonce (nonce: Nonce): Block = {

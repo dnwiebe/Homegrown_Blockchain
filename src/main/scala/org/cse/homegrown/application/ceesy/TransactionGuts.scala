@@ -22,11 +22,19 @@ class Signature (bytes: ByteSeq) extends ByteSeq (bytes.bytes) {
   }
 }
 
-case class Transaction (from: PublicKey, to: PublicKey, amount: Long, timestamp: Long)
+trait Transaction {
+  val transaction: TransactionGuts
+  def from: PublicKey = transaction.from
+  def to: PublicKey = transaction.to
+  def amount: Long = transaction.amount
+  def timestamp: Long = transaction.timestamp
+}
+
+case class TransactionGuts(from: PublicKey, to: PublicKey, amount: Long, timestamp: Long)
 
 object SignedTransaction {
   def pay (from: PublicKey, to: PublicKey, amount: Long, fromPrivateKey: PrivateKey): (SignedTransaction, Future[Boolean]) = {
-    val transaction = Transaction (from, to, amount, System.currentTimeMillis())
+    val transaction = TransactionGuts (from, to, amount, System.currentTimeMillis())
     val signature = Signature.sign (transaction, fromPrivateKey)
     val verifyPromise = Promise[Boolean] ()
     val result = new SignedTransaction (transaction, signature, verifyPromise)
@@ -34,21 +42,30 @@ object SignedTransaction {
   }
 
   def miningReward (miner: PublicKey): SignedTransaction = {
-    val transaction = Transaction (new PublicKey (Array ()), miner, Miner.TOKENS_PER_BLOCK, System.currentTimeMillis())
+    val transaction = TransactionGuts (new PublicKey (Array ()), miner, Miner.TOKENS_PER_BLOCK, System.currentTimeMillis())
     val signature = new Signature (new ByteSeq (Array ()))
     val verifyPromise = Promise[Boolean] ()
     new SignedTransaction (transaction, signature, verifyPromise)
   }
 }
 
-case class SignedTransaction (private val transaction: Transaction, private val signature: Signature,
-                              verifyPromise: Promise[Boolean]) {
-  val from: PublicKey = transaction.from
-  val to: PublicKey = transaction.to
-  val amount: Long = transaction.amount
-  val timestamp: Long = transaction.timestamp
-
+case class SignedTransaction (transaction: TransactionGuts, signature: Signature, verifyPromise: Promise[Boolean]) extends Transaction {
   def verifySignature(): Boolean = {
     signature.verify (transaction, from)
   }
 }
+
+object VerifiedTransaction {
+  def apply (signed: SignedTransaction): VerifiedTransaction = {
+    VerifiedTransaction (signed.transaction, signed.signature)
+  }
+
+  def miningReward (miner: PublicKey): VerifiedTransaction = {
+    val transaction = TransactionGuts (new PublicKey (Array ()), miner, Miner.TOKENS_PER_BLOCK, System.currentTimeMillis())
+    val signature = new Signature (new ByteSeq (Array ()))
+    val verifyPromise = Promise[Boolean] ()
+    VerifiedTransaction (new SignedTransaction (transaction, signature, verifyPromise))
+  }
+}
+
+case class VerifiedTransaction (transaction: TransactionGuts, private val signature: Signature) extends Transaction

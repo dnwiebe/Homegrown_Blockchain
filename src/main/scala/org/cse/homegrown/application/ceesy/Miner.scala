@@ -16,24 +16,38 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
   type Balances = HashMap[PublicKey, Long]
 
   def verifyOutstandingPayments (): Boolean = {
-    val transactions = ceesy.takePendingTransactions ()
-    val (promisePairs, balances) = transactions.foldLeft ((
-        List[(Promise[Boolean], Boolean)] (),
-        computeBalances (ceesy.chain.latest, new HashMap ())
-    )) {(soFar, xactn) =>
-      val (verifyPromises, balances) = soFar
-      val (updatedBalances, result) = verifyTransaction (xactn, balances)
-      val updatedPromises = (xactn.verifyPromise, result) :: verifyPromises
-      (updatedPromises, updatedBalances)
-    }
-    val block = Block ((SignedTransaction.miningReward(minerPublic) :: transactions).toArray, minerPublic)
+    val verificationResults = verifySignedTransactions ()
+    val block = makeBlock (verificationResults)
     val prettyBlock = prettify (block)
     ceesy.chain.add (prettyBlock)
-    promisePairs.foreach {pair =>
-      val (promise, result) = pair
-      promise.complete (Success (result))
+    verificationResults.foreach {result =>
+      val (xactn, valid) = result
+      xactn.verifyPromise.complete (Success (valid))
     }
     true
+  }
+
+  private def verifySignedTransactions (): List[(SignedTransaction, Boolean)] = {
+    val signedTransactions = ceesy.takePendingTransactions()
+    signedTransactions.foldLeft((
+      List[(SignedTransaction, Boolean)](),
+      computeBalances(ceesy.chain.latest, new HashMap())
+    )) { (soFar, xactn) =>
+      val (verifyPromises, balances) = soFar
+      val (updatedBalances, result) = verifyTransaction(xactn, balances)
+      val updatedResults = (xactn, result) :: verifyPromises
+      (updatedResults, updatedBalances)
+    }._1
+  }
+
+  private def makeBlock (verificationResults: List[(SignedTransaction, Boolean)]): Block = {
+    val verifiedTransactions = verificationResults.flatMap {pair =>
+      pair match {
+        case (xactn, true) => Some (VerifiedTransaction (xactn))
+        case (xactn, false) => None
+      }
+    }
+    Block ((VerifiedTransaction.miningReward(minerPublic) :: verifiedTransactions).toArray, minerPublic)
   }
 
   private def prettify (block: Block): Block = {
