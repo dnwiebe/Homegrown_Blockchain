@@ -27,7 +27,7 @@ class WalletTest extends path.FunSpec {
 
         describe ("and a block mined") {
           val miner = new Miner (ceesy, minerPublic)
-          miner.verifyOutstandingPayments()
+          miner.verify ()
 
           it ("all payments are verified, wallets have expected balances") {
             assert(initialToAlice.value === Some(Success(true)))

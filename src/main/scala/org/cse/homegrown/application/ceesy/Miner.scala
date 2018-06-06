@@ -4,7 +4,6 @@ import org.cse.homegrown.blockchain.BlockWrapper
 import org.cse.homegrown.utils.{Nonce, PublicKey}
 
 import scala.collection.immutable.HashMap
-import scala.concurrent.Promise
 import scala.util.{Random, Success}
 
 object Miner {
@@ -15,8 +14,21 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
 
   type Balances = HashMap[PublicKey, Long]
 
-  def verifyOutstandingPayments (): Boolean = {
-    val verificationResults = verifySignedTransactions ()
+  def verify () {
+    val (lastValidBlockWrapper, balances) = verifyChain ()
+    val nextValidBlockWrapper = verifyOutstandingPayments (balances)
+// TODO add this    ceesy.chain.addAt (lastValidBlockWrapper, nextValidBlockWrapper)
+  }
+
+  private def verifyChain (): (BlockWrapper, Balances) = {
+    // TODO Temporary
+    val blockWrapper = ceesy.chain.latest
+    val balances = computeBalances (blockWrapper, new HashMap ())
+    (blockWrapper, balances)
+  }
+
+  private def verifyOutstandingPayments (balances: Balances): BlockWrapper = {
+    val verificationResults = verifySignedTransactions (balances)
     val block = makeBlock (verificationResults)
     val prettyBlock = prettify (block)
     ceesy.chain.add (prettyBlock)
@@ -24,15 +36,12 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
       val (xactn, valid) = result
       xactn.verifyPromise.complete (Success (valid))
     }
-    true
+    null
   }
 
-  private def verifySignedTransactions (): List[(SignedTransaction, Boolean)] = {
+  private def verifySignedTransactions (balances: Balances): List[(SignedTransaction, Boolean)] = {
     val signedTransactions = ceesy.takePendingTransactions()
-    signedTransactions.foldLeft((
-      List[(SignedTransaction, Boolean)](),
-      computeBalances(ceesy.chain.latest, new HashMap())
-    )) { (soFar, xactn) =>
+    signedTransactions.foldLeft((List[(SignedTransaction, Boolean)](), balances)) { (soFar, xactn) =>
       val (verifyPromises, balances) = soFar
       val (updatedBalances, result) = verifyTransaction(xactn, balances)
       val updatedResults = (xactn, result) :: verifyPromises
