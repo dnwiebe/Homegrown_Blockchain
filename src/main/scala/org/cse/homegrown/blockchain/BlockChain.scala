@@ -1,26 +1,31 @@
 package org.cse.homegrown.blockchain
 
-import org.cse.homegrown.utils.Utils
-
 import scala.collection.mutable
 
-class BlockChain (genesisBlock: Any) {
-  private var latestHash = SHA_256 (Utils.serialize (genesisBlock))
-  private val chain = mutable.HashMap (latestHash -> BlockWrapper (0, System.currentTimeMillis (), genesisBlock, new Hash (Array ())))
+class BlockChain (genesisBlockContent: Any) {
+  private val genesisBlock = BlockWrapper (0, System.currentTimeMillis (), genesisBlockContent, new Hash (Array ()))
+  private var latestHash = genesisBlock.hash
+  private var leafHashes: Set[Hash] = Set (genesisBlock.hash)
+  private val chain = mutable.HashMap (latestHash -> genesisBlock)
 
   def latest: BlockWrapper = {
     chain (latestHash)
   }
 
+  def leaves (intervalMs: Long = 86400000L): Set[BlockWrapper] = leafHashes.flatMap (chain.get)
+
   def block (hash: Hash): Option[BlockWrapper] = {
     chain.get (hash)
   }
 
-  def add (content: Any): Unit = {
-    val previousBlock = latest
+  def add (content: Any, previousHashOpt: Option[Hash] = None): Hash = {
+    val previousHash = previousHashOpt.getOrElse (latestHash)
+    val previousBlock = block (previousHash).get
     val thisBlock = BlockWrapper (previousBlock.index + 1, System.currentTimeMillis(), content, previousBlock.hash)
     chain (thisBlock.hash) = thisBlock
     latestHash = thisBlock.hash
+    curateLeaves (thisBlock)
+    thisBlock.hash
   }
 
   def isValid: Boolean = {
@@ -37,5 +42,10 @@ class BlockChain (genesisBlock: Any) {
         isValidFrom (previous)
       }
     }
+  }
+
+  private def curateLeaves (newBlock: BlockWrapper): Unit = {
+    leafHashes -= newBlock.previousHash
+    leafHashes += newBlock.hash
   }
 }

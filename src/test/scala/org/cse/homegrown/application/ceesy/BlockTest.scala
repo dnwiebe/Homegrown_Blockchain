@@ -29,7 +29,7 @@ class BlockTest extends path.FunSpec {
     }
 
     it ("can be made Pretty in a reasonable number of tries") {
-      val limit = 1 << (Block.REQUIRED_ZEROS + 1) // twice the mean
+      val limit = 1 << (Block.REQUIRED_ZEROS + 2) // four times the mean
       var value = 0
       var prettyFound = false
       while (!prettyFound && (value < limit)) {
