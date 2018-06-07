@@ -33,6 +33,8 @@ trait Transaction {
 case class TransactionGuts(from: PublicKey, to: PublicKey, amount: Long, timestamp: Long)
 
 object SignedTransaction {
+  var timestamper: Timestamper = new RealTimestamper ()
+
   def pay (from: PublicKey, to: PublicKey, amount: Long, fromPrivateKey: PrivateKey): (SignedTransaction, Future[Boolean]) = {
     val transaction = TransactionGuts (from, to, amount, System.currentTimeMillis())
     val signature = Signature.sign (transaction, fromPrivateKey)
@@ -42,7 +44,7 @@ object SignedTransaction {
   }
 
   def miningReward (miner: PublicKey): SignedTransaction = {
-    val transaction = TransactionGuts (new PublicKey (Array ()), miner, Miner.TOKENS_PER_BLOCK, System.currentTimeMillis())
+    val transaction = TransactionGuts (new PublicKey (Array ()), miner, Miner.TOKENS_PER_BLOCK, timestamper.stamp ())
     val signature = new Signature (new ByteSeq (Array ()))
     val verifyPromise = Promise[Boolean] ()
     new SignedTransaction (transaction, signature, verifyPromise)
@@ -56,12 +58,14 @@ case class SignedTransaction (transaction: TransactionGuts, signature: Signature
 }
 
 object VerifiedTransaction {
+  var timestamper: Timestamper = new RealTimestamper ()
+
   def apply (signed: SignedTransaction): VerifiedTransaction = {
     VerifiedTransaction (signed.transaction, signed.signature)
   }
 
   def miningReward (miner: PublicKey): VerifiedTransaction = {
-    val transaction = TransactionGuts (new PublicKey (Array ()), miner, Miner.TOKENS_PER_BLOCK, System.currentTimeMillis())
+    val transaction = TransactionGuts (new PublicKey (Array ()), miner, Miner.TOKENS_PER_BLOCK, timestamper.stamp ())
     val signature = new Signature (new ByteSeq (Array ()))
     val verifyPromise = Promise[Boolean] ()
     VerifiedTransaction (new SignedTransaction (transaction, signature, verifyPromise))

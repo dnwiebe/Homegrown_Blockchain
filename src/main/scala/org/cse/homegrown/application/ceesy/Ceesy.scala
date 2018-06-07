@@ -1,9 +1,10 @@
 package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.blockchain.BlockChain
-import org.cse.homegrown.utils.{PrivateKey, PublicKey}
+import org.cse.homegrown.utils.{PrivateKey, PublicKey, RealTimestamper, Timestamper}
 
 object Ceesy {
+  implicit private val timestamper: Timestamper = new RealTimestamper ();
   private def makeChain (initialSupply: Long, initialPrivate: PrivateKey, initialPublic: PublicKey): BlockChain = {
     val (transaction, _) = SignedTransaction.pay (new PublicKey(Array ()), initialPublic, initialSupply, new PrivateKey (Array ()))
     val genesisBlock = Block (Array (VerifiedTransaction (transaction)), new PublicKey (Array ()))

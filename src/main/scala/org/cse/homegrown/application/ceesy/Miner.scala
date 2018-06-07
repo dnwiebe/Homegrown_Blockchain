@@ -1,7 +1,7 @@
 package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.blockchain.BlockWrapper
-import org.cse.homegrown.utils.{Nonce, PublicKey}
+import org.cse.homegrown.utils.{Nonce, PublicKey, RealTimestamper, Timestamper}
 
 import scala.collection.immutable.HashMap
 import scala.util.{Random, Success}
@@ -13,6 +13,8 @@ object Miner {
 class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
 
   type Balances = HashMap[PublicKey, Long]
+
+  implicit var timestamper: Timestamper = new RealTimestamper ()
 
   def verify () {
     val (lastValidBlockWrapper, balances) = verifyChain ()

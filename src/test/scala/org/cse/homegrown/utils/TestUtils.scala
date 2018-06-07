@@ -4,6 +4,16 @@ import scala.util.Random
 
 object TestUtils {
 
+  class OffsetTimestamper extends Timestamper {
+    var offset: Long = 0L
+
+    override def stamp (): Long = System.currentTimeMillis() + offset
+
+    def setOffset (offset: Long): Unit = {
+      this.offset = offset
+    }
+  }
+
   def makeKeyPair (bytes: Byte*): (PrivateKey, PublicKey) = {
     val privateKey = new PrivateKey (bytes.toArray)
     val publicKey = Utils.translateKey(privateKey)

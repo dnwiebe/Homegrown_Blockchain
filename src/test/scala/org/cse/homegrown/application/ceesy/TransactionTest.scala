@@ -1,6 +1,7 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.utils.{ByteSeq, Person, TestUtils, Utils}
+import org.cse.homegrown.utils.TestUtils.OffsetTimestamper
+import org.cse.homegrown.utils._
 import org.scalatest.path
 
 import scala.concurrent.Promise
@@ -31,13 +32,14 @@ class TransactionTest extends path.FunSpec {
   }
 
   describe ("Given a key pair and an extra public key") {
+    implicit val timestamper: Timestamper = new OffsetTimestamper ()
     val (fromPrivate, fromPublic) = TestUtils.makeKeyPair (12345)
     val (_, toPublic) = TestUtils.makeKeyPair (23456)
 
     describe ("a SignedTransaction from one to the other") {
-      val before = System.currentTimeMillis ()
+      val before = timestamper.stamp ()
       val (subject, verifyFuture) = SignedTransaction.pay (fromPublic, toPublic, 12345, fromPrivate)
-      val after = System.currentTimeMillis ()
+      val after = timestamper.stamp ()
 
       it ("shows the right data") {
         assert (subject.timestamp >= before)

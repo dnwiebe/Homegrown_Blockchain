@@ -1,14 +1,17 @@
 package org.cse.homegrown.blockchain
 
+import org.cse.homegrown.utils.TestUtils.OffsetTimestamper
 import org.scalatest.path
 
 class BlockChainTest extends path.FunSpec {
 
   describe ("A new BlockChain") {
-    val hashedBlock = new BlockWrapper (0, 0, "Genesis Block", new Hash (Array ()))
-    val before = System.currentTimeMillis()
+    val timestamper = new OffsetTimestamper ()
+    val hashedBlock = BlockWrapper (0, 0, "Genesis Block", new Hash (Array ()))
+    val before = timestamper.stamp ()
     val subject = new BlockChain ("Genesis Block")
-    val after = System.currentTimeMillis()
+    subject.timestamper = timestamper
+    val after = timestamper.stamp ()
 
     describe ("asked for its latest block") {
       val result = subject.latest
@@ -44,9 +47,9 @@ class BlockChainTest extends path.FunSpec {
     describe ("with a block added") {
       val genesisBlock = subject.latest
       val content = "Booga"
-      val before = System.currentTimeMillis()
+      val before = timestamper.stamp ()
       subject.add (content)
-      val after = System.currentTimeMillis()
+      val after = timestamper.stamp ()
 
       describe ("and then asked for its latest block") {
         val result = subject.latest

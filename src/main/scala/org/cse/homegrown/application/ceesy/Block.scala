@@ -1,13 +1,13 @@
 package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.blockchain.SHA_256
-import org.cse.homegrown.utils.{Nonce, PublicKey, Utils}
+import org.cse.homegrown.utils.{Nonce, PublicKey, Timestamper, Utils}
 
 object Block {
   val REQUIRED_ZEROS = 10
 
-  def apply (transactions: Array[VerifiedTransaction], validator: PublicKey): Block = {
-    new Block (transactions, System.currentTimeMillis(), validator, new Nonce (Array ()))
+  def apply (transactions: Array[VerifiedTransaction], validator: PublicKey) (implicit timestamper: Timestamper): Block = {
+    new Block (transactions, timestamper.stamp (), validator, new Nonce (Array ()))
   }
 }
 

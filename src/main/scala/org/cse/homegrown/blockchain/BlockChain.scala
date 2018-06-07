@@ -1,9 +1,12 @@
 package org.cse.homegrown.blockchain
 
+import org.cse.homegrown.utils.{RealTimestamper, Timestamper}
+
 import scala.collection.mutable
 
 class BlockChain (genesisBlockContent: Any) {
-  private val genesisBlock = BlockWrapper (0, System.currentTimeMillis (), genesisBlockContent, new Hash (Array ()))
+  var timestamper: Timestamper = new RealTimestamper ()
+  private val genesisBlock = BlockWrapper (0, timestamper.stamp (), genesisBlockContent, new Hash (Array ()))
   private var latestHash = genesisBlock.hash
   private var leafHashes: Set[Hash] = Set (genesisBlock.hash)
   private val chain = mutable.HashMap (latestHash -> genesisBlock)
@@ -21,7 +24,7 @@ class BlockChain (genesisBlockContent: Any) {
   def add (content: Any, previousHashOpt: Option[Hash] = None): Hash = {
     val previousHash = previousHashOpt.getOrElse (latestHash)
     val previousBlock = block (previousHash).get
-    val thisBlock = BlockWrapper (previousBlock.index + 1, System.currentTimeMillis(), content, previousBlock.hash)
+    val thisBlock = BlockWrapper (previousBlock.index + 1, timestamper.stamp (), content, previousBlock.hash)
     chain (thisBlock.hash) = thisBlock
     latestHash = thisBlock.hash
     curateLeaves (thisBlock)
