@@ -15,7 +15,11 @@ class BlockChain (genesisBlockContent: Any) {
     chain (latestHash)
   }
 
-  def leaves (intervalMs: Long = 86400000L): Set[BlockWrapper] = leafHashes.flatMap (chain.get)
+  def leaves (intervalMs: Long = 86400000L): Set[BlockWrapper] = {
+    val allLeaves = leafHashes.flatMap (chain.get)
+    val mostRecentTimestamp = allLeaves.foldLeft (0L) {(soFar, leaf) => if (leaf.timestamp > soFar) leaf.timestamp else soFar}
+    allLeaves.filter {leaf => (mostRecentTimestamp - leaf.timestamp) <= intervalMs}
+  }
 
   def block (hash: Hash): Option[BlockWrapper] = {
     chain.get (hash)
