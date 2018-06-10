@@ -4,7 +4,14 @@ import org.cse.homegrown.utils.{RealTimestamper, Timestamper}
 
 import scala.collection.mutable
 
-class BlockChain (genesisBlockContent: Any) {
+trait ReadOnlyBlockChain {
+  def latest: BlockWrapper
+  def leaves (intervalMs: Long = 86400000L): Set[BlockWrapper]
+  def block (hash: Hash): Option[BlockWrapper]
+  def isValid: Boolean
+}
+
+class BlockChain (genesisBlockContent: Any) extends ReadOnlyBlockChain {
   var timestamper: Timestamper = new RealTimestamper ()
   private val genesisBlock = BlockWrapper (0, timestamper.stamp (), genesisBlockContent, new Hash (Array ()))
   private var latestHash = genesisBlock.hash

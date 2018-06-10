@@ -24,7 +24,7 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
 
   private def verifyChain (): (BlockWrapper, Balances) = {
     // TODO Temporary
-    val blockWrapper = ceesy.chain.latest
+    val blockWrapper = ceesy.latest
     val balances = computeBalances (blockWrapper, new HashMap ())
     (blockWrapper, balances)
   }
@@ -33,7 +33,7 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
     val verificationResults = verifySignedTransactions (balances)
     val block = makeBlock (verificationResults)
     val prettyBlock = prettify (block)
-    ceesy.chain.add (prettyBlock)
+    ceesy.add (prettyBlock)
     verificationResults.foreach {result =>
       val (xactn, valid) = result
       xactn.verifyPromise.complete (Success (valid))
@@ -88,7 +88,7 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
       adjustedBalances
     }
     else {
-      computeBalances (ceesy.chain.block (blockWrapper.previousHash).get, adjustedBalances)
+      computeBalances (ceesy.block (blockWrapper.previousHash).get, adjustedBalances)
     }
   }
 
@@ -105,9 +105,5 @@ class Miner (ceesy: Ceesy, minerPublic: PublicKey) {
     if (afterFrom (transaction.from) < 0) {return (balances, false)}
     val afterBoth = recordIncrement (afterFrom, transaction.to, transaction.amount)
     (afterBoth, true)
-  }
-
-  private def addBlock (block: Block): Unit = {
-    ceesy.chain.add (block)
   }
 }

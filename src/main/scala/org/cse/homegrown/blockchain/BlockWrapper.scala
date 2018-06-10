@@ -6,7 +6,7 @@ case class BlockWrapper(index: Long, timestamp: Long, private val content: Any, 
   val data: PlainData = Utils.serialize (content)
   val hash = SHA_256 (data)
   def content[T] (cls: Class[T]): T = Utils.deserialize (data, cls)
-  def previous (chain: BlockChain): Option[BlockWrapper] = {
+  def previous (chain: ReadOnlyBlockChain): Option[BlockWrapper] = {
     if (previousHash.bytes.length == 0) {
       None
     }

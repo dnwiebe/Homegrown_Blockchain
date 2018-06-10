@@ -1,6 +1,6 @@
 package org.cse.homegrown.application.ceesy
 
-import org.cse.homegrown.blockchain.BlockChain
+import org.cse.homegrown.blockchain.{BlockChain, BlockWrapper, Hash, ReadOnlyBlockChain}
 import org.cse.homegrown.utils.{PrivateKey, PublicKey, RealTimestamper, Timestamper}
 
 object Ceesy {
@@ -12,10 +12,10 @@ object Ceesy {
   }
 }
 
-class Ceesy (initialSupply: Long, initialPrivate: PrivateKey, initialPublic: PublicKey) {
+class Ceesy (initialSupply: Long, initialPrivate: PrivateKey, initialPublic: PublicKey) extends ReadOnlyBlockChain {
   import Ceesy._
 
-  val chain: BlockChain = makeChain (initialSupply, initialPrivate, initialPublic)
+  private val chain: BlockChain = makeChain (initialSupply, initialPrivate, initialPublic)
   var pendingTransactions: List[SignedTransaction] = Nil
 
   def pendTransaction (transaction: SignedTransaction): Unit = {
@@ -27,4 +27,10 @@ class Ceesy (initialSupply: Long, initialPrivate: PrivateKey, initialPublic: Pub
     pendingTransactions = Nil
     result
   }
+
+  def block (hash: Hash): Option[BlockWrapper] = chain.block (hash)
+  override def leaves(intervalMs: Long): Set[BlockWrapper] = chain.leaves (intervalMs)
+  def latest: BlockWrapper = chain.latest
+  def add (content: Any, previousHashOpt: Option[Hash] = None): Hash = chain.add (content, previousHashOpt)
+  override def isValid: Boolean = chain.isValid
 }

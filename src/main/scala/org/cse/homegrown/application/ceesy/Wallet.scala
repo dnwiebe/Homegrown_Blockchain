@@ -13,7 +13,7 @@ class Wallet (ceesy: Ceesy, privateKey: PrivateKey, publicKey: PublicKey) {
   }
 
   def balance: Long = {
-    balanceFrom (ceesy.chain.latest)
+    balanceFrom (ceesy.latest)
   }
 
   private def balanceFrom (blockWrapper: BlockWrapper): Long = {
@@ -25,7 +25,7 @@ class Wallet (ceesy: Ceesy, privateKey: PrivateKey, publicKey: PublicKey) {
         case _ => soFar
       }
     }
-    blockWrapper.previous (ceesy.chain) match {
+    blockWrapper.previous (ceesy) match {
       case Some (previous) => blockBalance + balanceFrom (previous)
       case None => blockBalance
     }
