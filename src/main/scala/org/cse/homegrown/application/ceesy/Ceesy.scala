@@ -31,6 +31,27 @@ class Ceesy (initialSupply: Long, initialPrivate: PrivateKey, initialPublic: Pub
   def block (hash: Hash): Option[BlockWrapper] = chain.block (hash)
   override def leaves(intervalMs: Long): Set[BlockWrapper] = chain.leaves (intervalMs)
   def latest: BlockWrapper = chain.latest
-  def add (content: Any, previousHashOpt: Option[Hash] = None): Hash = chain.add (content, previousHashOpt)
   override def isValid: Boolean = chain.isValid
+
+  def add (block: Block, previousHashOpt: Option[Hash] = None): Option[Hash] = {
+    val transactionHashes = block.transactions.map {x => x.hash}.toSet
+    val earliestTimestamp = block.transactions.map {x => x.timestamp}.min
+    def hasKnownTransactions (blockWrapper: BlockWrapper): Boolean = {
+      val block = blockWrapper.content (classOf[Block])
+      if (block.timestamp < earliestTimestamp) false
+      else {
+        block.transactions.find {x => transactionHashes.contains (x.hash)} match {
+          case None => chain.block (blockWrapper.previousHash) match {
+            case None => false
+            case Some(blockWrapper) => hasKnownTransactions(blockWrapper)
+          }
+          case Some (_) => true
+        }
+      }
+    }
+    if (hasKnownTransactions (chain.latest)) None
+    else {
+      Some (chain.add (block, previousHashOpt))
+    }
+  }
 }

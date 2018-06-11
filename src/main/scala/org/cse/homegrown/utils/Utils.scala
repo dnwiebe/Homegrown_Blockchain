@@ -2,9 +2,6 @@ package org.cse.homegrown.utils
 
 import java.io.{ByteArrayInputStream, ByteArrayOutputStream, ObjectInputStream, ObjectOutputStream}
 
-import org.cse.homegrown.application.ceesy._
-import org.cse.homegrown.blockchain._
-
 object Utils {
 
   val HEX_DIGITS = Array ('0', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F')

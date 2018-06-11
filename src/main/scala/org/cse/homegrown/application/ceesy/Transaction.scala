@@ -61,7 +61,7 @@ object VerifiedTransaction {
   var timestamper: Timestamper = new RealTimestamper ()
 
   def apply (signed: SignedTransaction): VerifiedTransaction = {
-    VerifiedTransaction (signed.transaction, signed.signature)
+    VerifiedTransaction (signed.transaction, signed.signature, SHA_256 (Utils.serialize (signed)))
   }
 
   def miningReward (miner: PublicKey): VerifiedTransaction = {
@@ -72,4 +72,4 @@ object VerifiedTransaction {
   }
 }
 
-case class VerifiedTransaction (transaction: TransactionGuts, private val signature: Signature) extends Transaction
+case class VerifiedTransaction (transaction: TransactionGuts, private val signature: Signature, hash: Hash) extends Transaction

@@ -13,7 +13,7 @@ trait ReadOnlyBlockChain {
 
 class BlockChain (genesisBlockContent: Any) extends ReadOnlyBlockChain {
   var timestamper: Timestamper = new RealTimestamper ()
-  private val genesisBlock = BlockWrapper (0, timestamper.stamp (), genesisBlockContent, new Hash (Array ()))
+  private val genesisBlock = BlockWrapper (timestamper.stamp (), genesisBlockContent, new Hash (Array ()))
   private var latestHash = genesisBlock.hash
   private var leafHashes: Set[Hash] = Set (genesisBlock.hash)
   private val chain = mutable.HashMap (latestHash -> genesisBlock)
@@ -35,7 +35,7 @@ class BlockChain (genesisBlockContent: Any) extends ReadOnlyBlockChain {
   def add (content: Any, previousHashOpt: Option[Hash] = None): Hash = {
     val previousHash = previousHashOpt.getOrElse (latestHash)
     val previousBlock = block (previousHash).get
-    val thisBlock = BlockWrapper (previousBlock.index + 1, timestamper.stamp (), content, previousBlock.hash)
+    val thisBlock = BlockWrapper (timestamper.stamp (), content, previousBlock.hash)
     chain (thisBlock.hash) = thisBlock
     latestHash = thisBlock.hash
     curateLeaves (thisBlock)

@@ -17,7 +17,6 @@ class BlockChainTest extends path.FunSpec {
       val result = subject.latest
 
       it ("produces the genesis block") {
-        assert (result.index === 0)
         assert (result.timestamp >= before)
         assert (result.timestamp <= after)
         assert (result.data === Utils.serialize ("Genesis Block"))
@@ -53,10 +52,9 @@ class BlockChainTest extends path.FunSpec {
 
       describe ("and then asked for its latest block") {
         val result = subject.latest
-        val block = BlockWrapper (0, 0, content, new Hash (Array ()))
+        val block = BlockWrapper (0L, content, new Hash (Array ()))
 
         it ("produces the new block") {
-          assert (result.index === 1)
           assert (result.timestamp >= before)
           assert (result.timestamp <= after)
           assert (result.content (classOf[String]) === content)

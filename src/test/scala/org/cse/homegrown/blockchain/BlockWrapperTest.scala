@@ -7,11 +7,7 @@ class BlockWrapperTest extends path.FunSpec {
 
   describe ("A Block") {
     val content = Person ("Fred", "Milligan", 49)
-    val subject = BlockWrapper (1L, 2L, content, new Hash (Array (3, 4, 5)))
-
-    it ("has the expected index") {
-      assert (subject.index === 1L)
-    }
+    val subject = BlockWrapper (2L, content, new Hash (Array (3, 4, 5)))
 
     it ("has the expected timestamp") {
       assert (subject.timestamp === 2L)

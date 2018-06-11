@@ -1,10 +1,8 @@
 package org.cse.homegrown.application.ceesy
 
 import org.cse.homegrown.utils.TestUtils.OffsetTimestamper
-import org.cse.homegrown.utils.{Nonce, TestUtils, Timestamper, Utils}
+import org.cse.homegrown.utils.{Nonce, TestUtils, Timestamper}
 import org.scalatest.path
-
-import scala.concurrent.Promise
 
 class BlockTest extends path.FunSpec {
 
